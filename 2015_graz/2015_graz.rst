@@ -1,0 +1,39 @@
+###########################
+Bee-CASU workshop Graz 2015
+###########################
+
+Agenda and notes from the Bee-CASU workshop in Graz 2015.
+
+.. toctree::
+   :maxdepth: 4
+
+******************************
+CASU sensor and actuator demos
+******************************
+
+Individual sensor and actuator demos aim to demonstrate the
+capabilities of the CASU array prototype in generating and sensing
+bee-relevant stimuli.
+
+   heat_demo/heat_demo.rst
+   moving_optimum/moving_optimum.rst
+   proxy_demo/proxy_demo.rst
+   airflow_test/airflow_test.rst
+   vibration_test/vibration_test.rst
+
+*************************
+Binary choice experiments
+*************************
+
+The binary choice experiments represent initial proof-of concept
+experiments involving closed-loop Bee-CASU interaction.
+
+   binary_choice/single_arena/single_arena.rst
+   binary_choice/two_arenas_real_real/two_arenas_real_real.rst
+   binary_choice/two_arenas_real_virtual/two_arenas_real_virtual.rst
+
+******************
+Indices and tables
+******************
+
+
