@@ -25,12 +25,16 @@ class BeeWander:
         self.__bee = bee.Bee(name = bee_name)
         self.__thread = threading.Thread(target=self.wander)
         self.__thread.daemon = True
-        self._rotate_sz = 0.5
+        self._rotate_sz = 1.25
         self.__thread.start()
 
     def go_straight(self):
         #self.__bee.set_vel(0.5,0.5)
         self.__bee.set_vel(1.25, 1.25) 
+
+    def stop(self):
+        #self.__bee.set_vel(0.5,0.5)
+        self.__bee.set_vel(0, 0)
 
     def turn_left(self):
         self.__bee.set_vel(-1.0 * self._rotate_sz, +1.0 * self._rotate_sz)
@@ -50,11 +54,23 @@ class BeeWander:
             rf = 1
             rdiag = 1.5
             while ((self.__bee.get_range(bee.OBJECT_FRONT) < rf)
-                   and (self.__bee.get_range(bee.OBJECT_RIGHT_FRONT) < rdiag)):
-                self.turn_left()
-            while ((self.__bee.get_range(bee.OBJECT_FRONT) < rf)
-                   and (self.__bee.get_range(bee.OBJECT_LEFT_FRONT) < rdiag)):
-                self.turn_right()
+                   and (
+                       self.__bee.get_range(bee.OBJECT_RIGHT_FRONT) < rdiag or
+                       self.__bee.get_range(bee.OBJECT_LEFT_FRONT) < rdiag
+                       )):
+                r = random()
+                if r < 0.5:
+                    self.turn_left()
+                    time.sleep(0.2)
+                else:
+                    self.turn_right()
+                    time.sleep(0.2)
+                    
+            #while ((self.__bee.get_range(bee.OBJECT_FRONT) < rf)
+            #       and (self.__bee.get_range(bee.OBJECT_LEFT_FRONT) < rdiag)):
+            #    self.turn_right()
+
+            time.sleep(0.1)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -77,6 +93,8 @@ if __name__ == '__main__':
         while True:
             pass
     except KeyboardInterrupt:
+        for b in bees:
+            b.stop()
         print "done, goodbye."
 
 

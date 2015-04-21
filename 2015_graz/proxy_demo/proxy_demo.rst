@@ -29,5 +29,16 @@ Single wandering bee
 - run the single bee behaviour: bee_wandering.py 
 
 
+**Extend to >1 bee, single CASU**:
+
+minor deviation from above:
+assisi_playground
+- window 1:
+./spawn_casus.py
+./casu_sensing.py
+
+- window 2:
+./spawn_walls_and_bees.py -n <N>
+./bees_wander.py -n <N>
 
 
