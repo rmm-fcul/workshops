@@ -1,0 +1,4 @@
+digraph simple_3x3 {
+    subgraph "beearena" {
+    }
+}

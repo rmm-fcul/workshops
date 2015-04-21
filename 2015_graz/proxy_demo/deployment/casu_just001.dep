@@ -1,0 +1,11 @@
+# Deployment specification file
+# For each casu in the arena, we need to specifiy:
+#     - the hostname of the target machine
+#     - the controller and additional files to deploy
+
+beearena : 
+    casu-001 : 
+        hostname : casu-001
+        user : assisi
+        prefix : deploy 
+        controller: ../casu_sensing.py
