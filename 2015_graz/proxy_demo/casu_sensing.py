@@ -18,6 +18,7 @@ class CasuController(object):
     def __init__(self, rtc_file, calib_steps=10, interval=0.1, verb=False):
         self.verb = verb
         self.interval = interval
+        self.calib_gain = 1.1
         # connect to CASU
         self.__casu = casu.Casu(rtc_file)
         # calibrate sensor levels
@@ -33,12 +34,14 @@ class CasuController(object):
         read the sensors several times, and take the highest reading
         seen as the threshold.
         '''
-        self.thresh = [0] * 7 # default cases for threshold
+        self._raw_thresh = [0] * 7 # default cases for threshold
         for stp in xrange(calib_steps):
             for i, v in enumerate(self.__casu.get_ir_raw_value(casu.ARRAY)):
                 if v > self.thresh[i]:
-                    self.thresh[i] = v
+                    self._raw_thresh[i] = v
                 time.sleep(self.interval)
+
+        self.thresh = [x*self.calib_gain for x in self._raw_thresh]
 
         if self.verb:
             _ts =", ".join(["{:.2f}".format(x) for x in self.thresh])
