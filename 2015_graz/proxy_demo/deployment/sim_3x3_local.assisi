@@ -7,5 +7,5 @@ arena : simple_3x3-sim.arena
 nbg : simple_3x3-sim.nbg
 
 # Deployment specification
-dep : local-part.dep
-#dep : local.dep
+#dep : local-part.dep
+dep : local.dep
