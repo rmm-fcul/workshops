@@ -15,7 +15,7 @@ import sys
 
 class CasuController(object):
 
-    def __init__(self, rtc_file, calib_steps=10, interval=0.1, verb=False):
+    def __init__(self, rtc_file, calib_steps=50, interval=0.1, verb=False):
         self.verb = verb
         self.interval = interval
         self.calib_gain = 1.1
@@ -73,7 +73,12 @@ class CasuController(object):
         # 3b. count sensors 4:6 -> green channel
         # (variant: 3. count sensors 0:6 -> red channel)
         r = sum(above_thr[0:3])
-        g = sum(above_thr[3:6])
+        g = sum(above_thr[3:6]) 
+        
+        # set as a range \in off..on
+        # - with >1 color channel, this is not very noticable in the physical LEDs
+        #if r > 0: r  = 0.25 + 0.75*r/3.0
+        #if g > 0: g  = 0.25 + 0.75*g/3.0
         if self.verb:
             print "[I] r,g,b={}, {}, {}".format(r,g,0)
 

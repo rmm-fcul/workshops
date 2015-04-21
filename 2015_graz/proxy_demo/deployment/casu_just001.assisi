@@ -4,7 +4,7 @@
 arena : simple_just001.arena
 
 # Neighborhood graph
-nbg : simple_3x3.nbg
+nbg : simple_just001.nbg
 
 # Deployment specification
-dep : casu.dep
+dep : casu_just001.dep
