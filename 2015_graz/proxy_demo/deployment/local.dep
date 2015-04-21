@@ -1,0 +1,54 @@
+# Deployment specification file
+# For each casu in the arena, we need to specifiy:
+#     - the hostname of the target machine
+#     - the controller and additional files to deploy
+
+sim-01 : 
+    casu-001 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy 
+        controller: ../casu_sensing.py
+    casu-002 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-003 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-004 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-005 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-006 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-007 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-008 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-009 : 
+        hostname : localhost
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+
+            
+        
