@@ -20,7 +20,7 @@ class CasuController(object):
         self.interval = interval
         self.calib_gain = 1.1
         # connect to CASU
-        self.__casu = casu.Casu(rtc_file)
+        self.__casu = casu.Casu(rtc_file, log=True)
         # calibrate sensor levels
         self._calibrate(calib_steps)
 
@@ -37,9 +37,9 @@ class CasuController(object):
         self._raw_thresh = [0] * 7 # default cases for threshold
         for stp in xrange(calib_steps):
             for i, v in enumerate(self.__casu.get_ir_raw_value(casu.ARRAY)):
-                if v > self.thresh[i]:
+                if v > self._raw_thresh[i]:
                     self._raw_thresh[i] = v
-                time.sleep(self.interval)
+            time.sleep(self.interval)
 
         self.thresh = [x*self.calib_gain for x in self._raw_thresh]
 
