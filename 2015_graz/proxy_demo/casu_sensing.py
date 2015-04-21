@@ -11,6 +11,7 @@ RM - april 2015 workshop.
 
 from assisipy import casu
 import time
+import sys
 
 class CasuController(object):
 
@@ -86,8 +87,9 @@ class CasuController(object):
 
 
 if __name__ == '__main__':
+    casu_rtc_file = sys.argv[1] # this is supplied by the deploy tool
     interval = 1.0 / 5
-    ctrl = CasuController('casu.rtc', verb=True, interval=interval)
+    ctrl = CasuController(casu_rtc_file, verb=True, interval=interval)
     init_time = time.time()
     try:
         while True:
