@@ -21,8 +21,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # generate a simple arena
-    arena1, a_bounds = build_arenas.gen_base_arena(
-            length=args.radius, width=args.radius, ww=0.5, arc_steps=17)
+    if args.radius >= 0:
+        arena1, a_bounds = build_arenas.gen_base_arena(
+                length=args.radius, width=args.radius, ww=0.5, arc_steps=17)
 
     simctrl = sim.Control()
     
@@ -38,6 +39,7 @@ if __name__ == '__main__':
         simctrl.spawn('Bee', name, (x, y, theta))
 
     # spawn the walls
-    enki_ctrl.spawn_poly_group( simctrl, arena1, (0,0,0), label_stub='arena',
-            color=(0.5,0.5,0.5)    , verb=1)
+    if args.radius >= 0:
+        enki_ctrl.spawn_poly_group( simctrl, arena1, (0,0,0), label_stub='arena',
+                color=(0.5,0.5,0.5), verb=1)
 
