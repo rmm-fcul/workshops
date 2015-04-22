@@ -1,0 +1,6 @@
+digraph one_arena_in3x3 {
+    subgraph "sym_breaking_arena" {
+        "casu-001" -> "casu-002" [ label = "enemy" ]
+        "casu-002" -> "casu-001" [ label = "enemy" ]
+    }
+}
