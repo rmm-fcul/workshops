@@ -72,7 +72,7 @@ if __name__ == "__main__":
     args.rtc_path = ''
     args.logpath = './'
     args.verb = 1
-    args.conf_file = "with-cross.conf"
+    args.conf_file = "two-real-with-cross.conf"
     INPUT_CASU_NAME = 'casu-broken!'
     if len(sys.argv) > 1:
         INPUT_CASU_NAME = sys.argv[1]
@@ -271,7 +271,7 @@ if __name__ == "__main__":
                 if ENABLE_SET_LEDS:
                     # this is a small validation to check we have inter-comms ok
 
-                    pos = h.self_bias * r_mean
+                    pos = h.self_bias * r_mean + h.friend_bias * h.friend_most_recent_val
                     neg = h.enemy_bias * rbc2
                     _test_x = pos - neg
 
