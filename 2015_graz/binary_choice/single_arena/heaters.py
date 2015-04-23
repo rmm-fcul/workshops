@@ -14,14 +14,21 @@ Approx. a winner-takes all neural circuit in each arena
 
 # imports
 from assisipy import casu
-import assisipy_simtools.loggers
+import loggers as loglib
 import numpy as np
 import argparse, os, time
+import sys
 import casu_utils as clib
 import yaml
 from time import gmtime, strftime
+import time
 
-ENABLE_SET_TEMP = False
+ENABLE_SET_TEMP = True
+ENABLE_SET_LEDS = False
+
+class Fakeobj(object):
+    def __init__(self):
+        self._thing = "yo"
 
 if __name__ == "__main__":
     #{{{ external parameters
@@ -36,12 +43,13 @@ if __name__ == "__main__":
     ##TODO: incorporate the casu-set into conf file?
     #parser.add_argument('-v', '--verb', type=int, default=0,
     #                    help="verbosity level")
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
+    #parser = argparse.ArgumentParser()
+    #args = parser.parse_args()
+    args = Fakeobj()
     args.rtc_path = ''
     args.logpath = './'
     args.verb = 1
-    args.conf_file = "no-cross"
+    args.conf_file = "no-cross.conf"
     INPUT_CASU_NAME = 'casu-001'
     if len(sys.argv) > 1:
         INPUT_CASU_NAME = sys.argv[1]
@@ -92,10 +100,10 @@ if __name__ == "__main__":
         rtc   = os.path.join(args.rtc_path, fname)
         print "connecting to casu {} ('{}')".format(name, rtc)
         # connect to the casu and set up extra properties
-        h = casu.Casu(rtc_file_name=rtc)
+        h = casu.Casu(rtc_file_name=rtc, log=True)
         # identify the logical/physical mapping to neighbours. # ONLY REQD UNTIL # PR#12 merged
         h.comm_links = clib.find_comms_mapping(
-            name, rtc_path=args.rtc_path, suffix='-sim', verb=True)
+            name, rtc_path=args.rtc_path, suffix='', verb=True)
         # basic params, from setup file
         h._thename    = name
         h._listento   = casu_conf[name]['listen']
@@ -122,12 +130,12 @@ if __name__ == "__main__":
         # connect each one to a logger
         _logtime= strftime("%H:%M:%S-%Z", gmtime())
         logfile = '{}/{}-{}.log'.format(args.logpath, name, _logtime)
-        logger = assisipy_simtools.loggers.LogCASUActivity(h, logfile, append=False, delimiter=';')
+        logger = loglib.LogCASUActivity(h, logfile, append=False, delimiter=';')
         loggers.append(logger)
     #}}}
     # run calibration
     for h in heaters:
-        clib._calibrate(h, calib_steps, calib_gain=1.1, interval=0.1)
+        clib._calibrate(h, calib_steps=50, calib_gain=1.1, interval=0.1)
 
 
     try:
@@ -225,7 +233,9 @@ if __name__ == "__main__":
                 r,g,b = clib.gen_clr_tgt(
                     h.prev_temp, cmap_fake, t_cur, min_temp=shared_conf.min_temp,
                     max_temp=shared_conf.max_temp)
-                h.set_diagnostic_led_rgb(r=r, g=g, b=b)
+                r = rd.mean() / 6.0
+                if ENABLE_SET_LEDS:
+                    h.set_diagnostic_led_rgb(r=r)
 
                 if (update_temp_now):
                 #{{{ if so, change temperature and LED display clr
@@ -249,7 +259,7 @@ if __name__ == "__main__":
                     if err > 0.5:
                         h.err_cnt += 1
                         print clib.ERR + "[W] {:.2f} away ({}|{} errs)".format(err, h.err_cnt, ts/shared_conf.rel_upd_rate) + clib.ENDC,
-                    print " "
+                    print " [LED{:.2f}]".format(r)
 
                     # (mis)match between instantaneous and time-average [UNCLIPPED]
                     print "\tinst: {}, mean|med|max recent: {:.2f}|{:.2f}|{:.2f}".format(

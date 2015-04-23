@@ -13,7 +13,8 @@ import numpy as np
 from assisipy import casu
 #import matplotlib.cm as cm
 from datetime import datetime
-from assisipy_simtools.loggers import parsing # use this until PR#12 merged
+import parsing
+import time
 
 ### ============= maths ============= ###
 
@@ -42,6 +43,8 @@ def measure_ir_sensors(mycasu, detect_data):
         if (val > t):
             count += 1
 
+    #print "raw:", 
+    #print ",".join(["{:.2f}".format(x) for x in mycasu.get_ir_raw_value(casu.ARRAY)])
     #mycasu.total_count += count # historical count over all time
     detect_data = np.roll(detect_data, 1) # step all positions back
     detect_data[0] = count      # and overwrite the first entry (this was rolled
@@ -67,7 +70,7 @@ def detect_bee_proximity_saturated(h):
 #{{{ find_mean_ext_temp
 def find_mean_ext_temp(h):
     r = []
-    for sensor in [casu.TEMP_N, casu.TEMP_E, casu.TEMP_S, casu.TEMP_W ]:
+    for sensor in [casu.TEMP_F, casu.TEMP_B, casu.TEMP_L, casu.TEMP_R ]:
         r.append(h.get_temp(sensor))
 
     if len(r):
@@ -207,7 +210,7 @@ def gen_clr_tgt(new_temp, cmap, tgt=None, min_temp=28.0, max_temp=38.0):
     #r,g,b,a = cmap(i)
     g = 0.0; b = 0.0; a = 1.0;
     
-    i = sorted([0, i, len(cmap)])[1]
+    i = sorted([0, i, len(cmap)-1])[1]
     r = cmap[i]
 
     # now adjust according to distance from target
@@ -279,6 +282,7 @@ def _calibrate(h, calib_steps, calib_gain=1.1, interval=0.1):
         time.sleep(interval)
 
     h.thresh = [x*calib_gain for x in h._raw_thresh]
+    h.threshold = [x*calib_gain for x in h._raw_thresh]
 
     if h.verb:
         _ts =", ".join(["{:.2f}".format(x) for x in h.thresh])
