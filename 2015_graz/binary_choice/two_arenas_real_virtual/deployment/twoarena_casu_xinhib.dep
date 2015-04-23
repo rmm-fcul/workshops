@@ -1,0 +1,28 @@
+# Deployment specification file
+# For each casu in the arena, we need to specifiy:
+#     - the hostname of the target machine
+#     - the controller and additional files to deploy
+
+real_arena :
+    casu-001 : 
+        hostname : casu-001
+        user : assisi
+        prefix : deploy 
+        controller: ../xinhib_heaters.py
+    casu-004 : 
+        hostname : casu-004
+        user : assisi
+        prefix : deploy
+        controller: ../xinhib_heaters.py
+
+sim-virtual_arena:
+    casu-003 : 
+        hostname : 192.168.12.79
+        user : assisi
+        prefix : deploy 
+        controller: ../xinhib_heaters.py
+    casu-006 : 
+        hostname : 192.168.12.79
+        user : assisi
+        prefix : deploy 
+        controller: ../xinhib_heaters.py

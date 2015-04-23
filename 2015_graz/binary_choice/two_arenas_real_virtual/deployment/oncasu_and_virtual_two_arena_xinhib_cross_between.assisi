@@ -1,0 +1,8 @@
+# This file describes a deployment project
+
+# Arena description file -- this holds for both comms patterns
+arena : real_and_virtual_two_arena_in3x3.arena
+# Neighborhood graph -- this must be specific to the comms pattern
+nbg : two_arena_cross_in3x3.nbg
+# Deployment specification -- selects which controller to which CASU. Initially ok to leave same.
+dep : twoarena_casu_xinhib.dep

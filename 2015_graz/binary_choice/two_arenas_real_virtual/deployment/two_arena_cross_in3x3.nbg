@@ -1,0 +1,18 @@
+
+digraph real_virtual_in3x3 {
+    subgraph "real_arena" {
+        "casu-001" -> "casu-004" [ label = "enemy" ]
+        "casu-004" -> "casu-001" [ label = "enemy" ]
+
+        "casu-001" -> "sim-virtual_arena/casu-sim-006" [ label = "accomplice" ]
+        "casu-004" -> "sim-virtual_arena/casu-sim-003" [ label = "accomplice" ]
+    }
+    subgraph "sim-virtual_arena" {
+        "casu-sim-003" -> "casu-sim-006" [ label = "enemy" ]
+        "casu-sim-006" -> "casu-sim-003" [ label = "enemy" ]
+
+        "casu-sim-003" -> "real_arena/casu-004"  [ label = "accomplice" ]
+        "casu-sim-006" -> "real_arena/casu-001"  [ label = "accomplice" ]
+
+    }
+}
