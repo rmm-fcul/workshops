@@ -85,7 +85,7 @@ def find_mean_ext_temp(h):
 #{{{ comms functions
 def transmit_my_count(h, sat_count, dest='accomplice'):
     s = "{}".format(sat_count)
-    if h.verb:
+    if h.verb > 1:
         print "\t[i]==> {} send msg ({} by): '{}' bees, to {}".format(
             h._thename, len(s), s, dest)
     h.send_message(dest, s)
@@ -112,7 +112,7 @@ def recv_all_msgs(h, retry_cnt=0, max_recv=None):
             bee_cnt = float(txt.split()[0])
             msgs.append((src, bee_cnt))
 
-            if h.verb:
+            if h.verb >1:
                 print "\t[i]<== {3} recv msg ({2} by): '{1}' bees, {4} from {0} {5}".format(
                     msg['sender'], bee_cnt, len(msg['data']), h._thename,
                     BLU, ENDC)
@@ -139,7 +139,7 @@ def recv_neighbour_msg(h):
     if msg:
         txt = msg['data'].strip()
         bee_cnt = int(txt.split()[0])
-        if h.verb:
+        if h.verb >1:
             print "\t[i]<== {3} recv msg ({2} by): '{1}' bees, from {0}".format(
                 msg['sender'], bee_cnt, len(msg['data']), h._thename)
 
@@ -155,7 +155,7 @@ def recv_neighbour_msg_w_src(h):
         txt = msg['data'].strip()
         src = msg['sender']
         bee_cnt = float(txt.split()[0])
-        if h.verb:
+        if h.verb >1:
             print "\t[i]<== {3} recv msg ({2} by): '{1}' bees, from {0}".format(
                 msg['sender'], bee_cnt, len(msg['data']), h._thename)
         if h.verb > 1:
@@ -172,7 +172,7 @@ def recv_neighbour_msg_flt(h):
     if msg:
         txt = msg['data'].strip()
         bee_cnt = float(txt.split()[0])
-        if h.verb:
+        if h.verb > 1:
             print "\t[i]<== {3} recv msg ({2} by): '{1}' bees, from {0}".format(
                 msg['sender'], bee_cnt, len(msg['data']), h._thename)
 

@@ -26,6 +26,28 @@ import time
 ENABLE_SET_TEMP = True
 ENABLE_SET_LEDS = False
 
+def update_temp_wrapper(h, new_temp, ref_deviate):
+    '''
+    only change the temperture when we requested somehting far enough
+    away that it will make a difference.  This is only to work around
+    the frequency of setting new values.
+
+    '''
+    
+    if abs(new_temp - h.old_temp) > ref_deviate:
+        # make a new request
+        h.set_temp(new_temp)
+        # update the info on it
+        now = time.time()
+        elap = now - h.last_rq_time
+        h.last_rq_time = now
+        tstr = strftime("%H:%M:%S-%Z", gmtime())
+        print "[I] requested new temp @{} from {:.2f} to {:.2f}".format(
+                tstr, h.old_temp, new_temp)
+        h.old_temp = new_temp
+
+
+
 class Fakeobj(object):
     ''' just have an object we can add properties to'''
     def __init__(self):
@@ -127,6 +149,9 @@ if __name__ == "__main__":
         h.enemy_rx   = 0 # debug: count balance of msgs recv from each neighbor
         h.friend_rx  = 0 # ditto
         h.err_cnt    = 0 # this just keeps track of windowed vs inst IR counts
+
+        h.old_temp   = 25 
+        h.last_rq_time = time.time()
 
         heaters.append(h)
         # connect each one to a logger
@@ -262,7 +287,8 @@ if __name__ == "__main__":
                 if (update_temp_now):
                 #{{{ if so, change temperature and LED display clr
                     if ENABLE_SET_TEMP:
-                        h.set_temp(new_temp)
+                        update_temp_wrapper(h, new_temp, ref_deviate=0.5)
+
 
                     h.prev_temp = new_temp
                     h.last_update_time = time.time()
