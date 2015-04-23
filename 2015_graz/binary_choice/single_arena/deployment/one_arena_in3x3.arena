@@ -11,14 +11,14 @@ sym_breaking_arena :
     # Casu names have to start with casu- in order for
     # automatic spawning to work; they are also only
     # allowed to contain letters, dashes and underscores
-    casu-001 :
-        pose : {x : -5, y : 5, yaw : 0}
-        sub_addr : tcp://casu-001:1555
-        pub_addr : tcp://casu-001:1556
-        msg_addr : tcp://casu-001:10201
     casu-002 :
         pose : {x : 0, y : 5, yaw : 0}
         sub_addr : tcp://casu-002:2555
         pub_addr : tcp://casu-002:2556
         msg_addr : tcp://casu-002:20202
+    casu-005 :
+        pose : {x : 0, y : 0, yaw : 0}
+        sub_addr : tcp://casu-005:1555
+        pub_addr : tcp://casu-005:1556
+        msg_addr : tcp://casu-005:10205
 

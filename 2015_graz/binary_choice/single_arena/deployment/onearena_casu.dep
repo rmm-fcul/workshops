@@ -4,8 +4,8 @@
 #     - the controller and additional files to deploy
 
 sym_breaking_arena :
-    casu-001 : 
-        hostname : casu-001
+    casu-005 : 
+        hostname : casu-005
         user : assisi
         prefix : deploy 
         controller: ../heaters.py
