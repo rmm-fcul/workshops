@@ -7,7 +7,7 @@ A simple simulation environment with one Casu and one bee.
 
 from assisipy import sim
 from assisipy_simtools.arena import build_arenas, enki_ctrl
-
+from assisipy_simtools.arena.transforms import Transformation, apply_transform_to_group
 from random import random
 from math import pi, cos, sin
 import argparse
@@ -16,19 +16,21 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-n', '--num-bees', type=int, default=1,
             help='number of bees to run.')
-    parser.add_argument('-r', '--radius', type=float, default=15.0,
-            help='radius of circular arena')
+    #parser.add_argument('-r', '--radius', type=float, default=15.0,
+    #        help='radius of circular arena')
     args = parser.parse_args()
 
     # generate a simple arena
-    if args.radius >= 0:
-        arena1, a_bounds = build_arenas.gen_base_arena(
-                length=args.radius, width=args.radius, ww=0.5, arc_steps=17)
+    T1 = Transformation(5, 0, pi/2)
+    arena1, a_bounds = build_arenas.gen_base_arena(
+            length=16.5, width=7.5, ww=0.5, arc_steps=17)
+    arena_placed = apply_transform_to_group(arena1, T1)
 
     simctrl = sim.Control()
     
     # Spawn each of the bees 
-    for i in range(1, args.num_bees + 1):
+    if 0:
+      for i in range(1, args.num_bees + 1):
         rr = args.radius / 2.0
         r = (rr-1.5-0.5) * random()
         r += 1.5 # don't spawn on top of the casu
@@ -39,7 +41,6 @@ if __name__ == '__main__':
         simctrl.spawn('Bee', name, (x, y, theta))
 
     # spawn the walls
-    if args.radius >= 0:
-        enki_ctrl.spawn_poly_group( simctrl, arena1, (0,0,0), label_stub='arena',
-                color=(0.5,0.5,0.5), verb=1)
+    enki_ctrl.spawn_poly_group( simctrl, arena_placed, (0,0,0), label_stub='arena',
+            color=(0.5,0.5,0.5), verb=1)
 
