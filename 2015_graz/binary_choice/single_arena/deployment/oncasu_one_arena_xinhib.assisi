@@ -1,0 +1,10 @@
+# This file describes a deployment project
+
+# Arena description file
+arena : one_arena_in3x3.arena
+
+# Neighborhood graph
+nbg : one_arena_in3x3.nbg
+
+# Deployment specification
+dep : onearena_casu_xinhib.dep
