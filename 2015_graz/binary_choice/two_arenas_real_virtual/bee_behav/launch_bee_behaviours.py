@@ -7,6 +7,7 @@ import subprocess
 #import sys
 import time, datetime
 import argparse
+import csv
 
 from assisipy_simtools.arena import enki_prep
 
@@ -29,9 +30,16 @@ def read_bee_names(fname, verb=False):
 
     bees = []
     pub_sub = []
-    specs = enki_prep.read_animates_specfile(fname, verb=verb)
+    specs = []
+    with open(fname, 'r') as fh:
+        R = csv.reader(fh, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL,
+                skipinitialspace=True)
+        for row in R:
+            specs.append(row)
+            print len(row)
 
-    for (ty, name, pos, pub_addr, sub_addr) in specs:
+
+    for (ty, name, x, y, yaw, pub_addr, sub_addr,)  in specs:
         if ty.lower() == 'bee':
             bees.append(name)
             pub_sub.append( (pub_addr, sub_addr) )
@@ -84,6 +92,7 @@ if __name__ == '__main__':
     parser.add_argument('-e', '--exec-script', type=str, default='./bee_behav.py',
             help='name of script to execute for each bee in `bee-file`')
     args = parser.parse_args()
+
 
     bee_names, addrs = read_bee_names(args.obj_listing)
     print "[I] {} bees to run with behaviour '{}'".format(
