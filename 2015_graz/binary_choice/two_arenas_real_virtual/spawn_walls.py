@@ -6,7 +6,7 @@ A simple simulation environment with one Casu and one bee.
 """
 
 from assisipy import sim
-from assisipy_simtools.arena import build_arenas, enki_ctrl
+from assisipy_simtools.arena import build_arenas, enki_ctrl, enki_prep
 from assisipy_simtools.arena.transforms import Transformation, apply_transform_to_group
 from random import random
 from math import pi, cos, sin
@@ -41,6 +41,6 @@ if __name__ == '__main__':
         simctrl.spawn('Bee', name, (x, y, theta))
 
     # spawn the walls
-    enki_ctrl.spawn_poly_group( simctrl, arena_placed, (0,0,0), label_stub='arena',
+    enki_prep.spawn_poly_group( simctrl, arena_placed, (0,0,0), label_stub='arena',
             color=(0.5,0.5,0.5), verb=1)
 

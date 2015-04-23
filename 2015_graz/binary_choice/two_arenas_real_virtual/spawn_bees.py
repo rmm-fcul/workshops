@@ -35,7 +35,10 @@ if __name__ == '__main__':
     # Spawn each of the bees 
     lf = open('deployment/spawn_bee_locations.DATE', 'w')
     enki_prep.spawn_animate_objects(simctrl, bee_pos, 'bee', 'Bee', lf,
-            verb=verb, offset=0)
+            verb=verb, offset=0, 
+            pub_addr="tcp://192.168.12.79:5556",
+            sub_addr="tcp://192.168.12.79:5555",
+            )
 
     lf.close()
 

@@ -18,12 +18,14 @@
 
 bee_local_conf=bee-virt.conf
 my_spec=../deployment/spawn_bee_locations.DATE
-logpath=results/trial1
+logpath=../results/trial1
 mkdir -p ${logpath}
 
 # how to run bees? ...
-python launch_bee_behaviours.py --exec-script addrs_bee_wander.py \
+cd bee_behav
+cmd="python launch_bee_behaviours.py --exec-script addrs_bee_wander.py \
     --obj-listing ${my_spec} --local-conf ${bee_local_conf} \
     --logpath ${logpath}"
+echo ${cmd}
 
 

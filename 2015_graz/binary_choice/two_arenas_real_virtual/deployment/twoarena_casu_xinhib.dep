@@ -16,12 +16,12 @@ real_arena :
         controller: ../xinhib_heaters.py
 
 sim-virtual_arena:
-    casu-003 : 
+    casu-sim-003 : 
         hostname : 192.168.12.79
         user : assisi
         prefix : deploy 
         controller: ../xinhib_heaters.py
-    casu-006 : 
+    casu-sim-006 : 
         hostname : 192.168.12.79
         user : assisi
         prefix : deploy 
