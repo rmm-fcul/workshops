@@ -23,8 +23,8 @@ import yaml
 from time import gmtime, strftime
 import time
 
-ENABLE_SET_TEMP = False
-ENABLE_SET_LEDS = True
+ENABLE_SET_TEMP = True
+ENABLE_SET_LEDS = False
 
 def update_temp_wrapper(h, new_temp, ref_deviate):
     '''
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     args = Fakeobj()
     args.rtc_path = ''
     args.logpath = './'
-    args.verb = 3
+    args.verb = 1
     args.conf_file = "real-virtual-cross.conf"
     INPUT_CASU_NAME = 'casu-broken!'
     if len(sys.argv) > 1:

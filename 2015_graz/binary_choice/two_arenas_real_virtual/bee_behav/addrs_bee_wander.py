@@ -370,7 +370,7 @@ class BeeClustBee(object):
                 stop(self.mybee)
                 wait_max = 25.0
 
-                self.mybee.set_color(r=waiting_time/wait_max, g=0, b=0)
+                self.mybee.set_color(g=0.35+0.65*(waiting_time/wait_max))#, g=0.0, b=0)
                 sleep(waiting_time)
 
                 # after waiting we randomly turn and then return to forward behav

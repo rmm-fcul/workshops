@@ -12,14 +12,16 @@
 
 # 3. put in bees (real)
 # 4. spawn bees (virtual), and start bee controllers
-#python spawn_bees.py
+python spawn_bees.py -n 15
 
 #sleep(2)
 
 bee_local_conf=bee-virt.conf
 my_spec=../deployment/spawn_bee_locations.DATE
-logpath=../results/trial1
+logpath=results/real_with_bees2
 mkdir -p ${logpath}
+
+logpath="../"${logpath}
 
 # how to run bees? ...
 cd bee_behav
