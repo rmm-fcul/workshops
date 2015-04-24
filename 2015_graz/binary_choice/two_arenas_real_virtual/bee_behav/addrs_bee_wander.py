@@ -14,11 +14,32 @@ import yaml
 from assisipy import bee
 import bee_log
 import signal
+from math import sin, cos, pi
+import numpy as np
+
+#{{{ math convenience
+def deg2rad(x):
+    '''
+    convert an angle in degrees to an angle in radians. Pure python
+    implementation as per the numpy docs. (scalar only - not vectorised)
+    '''
+    return x * (pi / 180.0)
+
+def rad2deg(x):
+    '''
+    convert an angle in radians to an angle in degrees. Pure python
+    implementation as per the numpy docs. (scalar only - not vectorised)
+    '''
+    return x * (180.0 / pi)
+#}}}
+
 
 #{{{ basic bee behaviours
 CW = +1
 CCW = -1
 IMMEDIATE_FWD = False
+START_STATE_FWD = True
+DETECT_SLIDE = True
 
 def stop(abee):
     vel = 0.0 # cm/s  - real mean vel = 1.25
@@ -175,6 +196,8 @@ def check_for_collision_with_bees(objs, ranges, range_thresh=None):
             if (0): print "{2}Detected a bee ('{0}') at range {1:.2f} ".format(o, r,
                     '**' if bee_nearby else '  ')
     return bee_nearby
+
+
 #}}}
 
 
@@ -202,6 +225,8 @@ class BeeClustBee(object):
         self.override_fwd_clr           = conf.get('override_fwd_clr', False)
         self._fwd_clr                   = conf.get('fwd_clr', (0.3,0.3,0.3))
         self.update_delay               = conf.get('update_interval', 0.1)
+        self.slide_det_len = 3
+        self.slide_yaw_tol = deg2rad(5)
 
         self.range_thresh_bee = 0.5
         self.verb = verb
@@ -221,6 +246,10 @@ class BeeClustBee(object):
         self.CLR_COLL_OBJ  = (0, 0, 1)
         self.CLR_COLL_BEE  = (0, 1, 0)
         self.CLR_WAIT  = (0.93, 0.0, 0)
+        self._xhist   = np.zeros(self.slide_det_len,)
+        self._yhist   = np.zeros(self.slide_det_len,)
+        self._yawhist = np.zeros(self.slide_det_len,)
+
 
         if self.override_fwd_clr:
             # special color for this machine / bee
@@ -230,6 +259,61 @@ class BeeClustBee(object):
             #self.CLR_FWD = (0.0, 0.60, 0.80)
 
 
+    #}}}
+    #{{{ detect_sliding
+    def detect_sliding(self):
+        '''
+        return true if have been sliding, where bearing does not get honoured
+        '''
+        sliding = False
+        x, y, yaw = self.mybee.get_true_pose()
+        # step all data back by one
+        self._xhist   = np.roll(self._xhist, 1)
+        self._yhist   = np.roll(self._yhist, 1)
+        self._yawhist = np.roll(self._yawhist, 1)
+        # enter new recordings
+        self._xhist[0]   = x
+        self._yhist[0]   = y
+        self._yawhist[0] = yaw
+
+        
+        # for VERTICAL walls, these are heading at pi/2 or -pi/2
+        #0.75 * np.sin(np.deg2rad(5))
+        if (abs(yaw - pi/2.0) > self.slide_yaw_tol or
+                abs(yaw - (3.0*pi)/2.0) > self.slide_yaw_tol):
+            # what is x movement?
+            d = []
+            for i in xrange(len(self._xhist) - 1):
+                d.append(self._xhist[i] - self._xhist[i+1])
+
+            mean_xmov = np.mean(np.abs(d))
+
+
+            #print "[I] cehcking for V  slide with truepos: {:.2f}, {:.2f}, {:.2f} (move: {:.2f}".format( x,y, np.rad2deg(yaw), mean_xmov),
+            if mean_xmov < (0.05 * np.sin(np.deg2rad(5))):
+                sliding = True
+                #print "AN I THINK I AM"
+            #else: print "(not slide)"
+
+        # for HIRIIZONTAL walls, these are 0 or pi
+        '''
+        UNTESTED -- for initial test we use the vert walls
+        elif (abs(yaw - pi) > self.slide_yaw_tol or
+                abs(yaw - 0) > self.slide_yaw_tol):
+            # what is y movement?
+            d = []
+            for i in xrange(len(self._yhist) - 1):
+                d.append(self._yhist[i] - self._yhist[i+1])
+            mean_ymov = np.mean(np.abs(d))
+
+            if mean_ymov < (0.05 * np.sin(np.deg2rad(5))):
+                sliding = True
+        '''
+
+
+
+        
+        return sliding
     #}}}
 
     def stop(self):
@@ -241,7 +325,8 @@ class BeeClustBee(object):
         explicit object aversion
         '''
         #{{{ beeclust model loop
-        turn_random(self.mybee) # in case the bee got stuck on wall at init time?
+        if not START_STATE_FWD:
+            turn_random(self.mybee) # in case the bee got stuck on wall at init time?
         while True:
             self.logger.record_pos() # maybe better at end?
             sleep(self.update_delay) # no more than 10x /sec updates
@@ -254,6 +339,13 @@ class BeeClustBee(object):
                     # carry on
                     self.mybee.set_color(*self.CLR_FWD)
                     #set_color(self,r=0.93,g=0.79,b=0)
+                    if DETECT_SLIDE:
+                        #am_i_sliding = self.detect_sliding()
+                        if self.detect_sliding():
+                            self.mybee.set_color(*self.CLR_COLL_OBJ)
+                            turn_random(self.mybee)
+
+                    self.mybee.set_color(*self.CLR_FWD)
                     go_straight(self.mybee)
                 else:
                     self.mybee.set_color(*self.CLR_COLL_OBJ)
