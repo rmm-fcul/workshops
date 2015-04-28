@@ -1,0 +1,27 @@
+# Deployment specification file
+# For each casu in the arena, we need to specifiy:
+#     - the hostname of the target machine
+#     - the controller and additional files to deploy
+
+sym_breaking_arena :
+    casu-001 : 
+        hostname : casu-001
+        user : assisi
+        prefix : deploy 
+        controller: ../xinhib_heaters.py
+    casu-004 : 
+        hostname : casu-004
+        user : assisi
+        prefix : deploy
+        controller: ../xinhib_heaters.py
+
+    casu-003 : 
+        hostname : casu-003
+        user : assisi
+        prefix : deploy 
+        controller: ../xinhib_heaters.py
+    casu-006 : 
+        hostname : casu-006
+        user : assisi
+        prefix : deploy 
+        controller: ../xinhib_heaters.py

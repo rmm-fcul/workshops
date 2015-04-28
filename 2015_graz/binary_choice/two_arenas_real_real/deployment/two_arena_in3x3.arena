@@ -1,0 +1,34 @@
+# A simple configuration file describing a 3x3 arena
+
+# Layer names can be assigned arbitrarily, 
+# as long as they consist only of letters, dashes and underscores
+
+# A sim- prefix in layer names defines layers of objects 
+# that will be spawned in the simulator when running sim.py 
+# on this file
+
+sym_breaking_arena :
+    # Casu names have to start with casu- in order for
+    # automatic spawning to work; they are also only
+    # allowed to contain letters, dashes and underscores
+    casu-001 :
+        pose : {x : -5, y : 5, yaw : 0}
+        sub_addr : tcp://casu-001:1555
+        pub_addr : tcp://casu-001:1556
+        msg_addr : tcp://casu-001:10201
+    casu-003 :
+        pose : {x : 5, y : 5, yaw : 0}
+        sub_addr : tcp://casu-003:1555
+        pub_addr : tcp://casu-003:1556
+        msg_addr : tcp://casu-003:10203
+    casu-004 :
+        pose : {x : -5, y : 0, yaw : 0}
+        sub_addr : tcp://casu-004:2555
+        pub_addr : tcp://casu-004:2556
+        msg_addr : tcp://casu-004:20204
+    casu-006 :
+        pose : {x : 5, y : 0, yaw : 0}
+        sub_addr : tcp://casu-006:2555
+        pub_addr : tcp://casu-006:2556
+        msg_addr : tcp://casu-006:20206
+
