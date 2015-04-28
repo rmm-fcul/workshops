@@ -1,0 +1,11 @@
+# This file describes a deployment project
+
+# Arena description file
+arena : simple_3x3-sim.arena
+
+# Neighborhood graph
+nbg : simple_3x3-sim.nbg
+
+# Deployment specification
+#dep : local-part.dep
+dep : local.dep
