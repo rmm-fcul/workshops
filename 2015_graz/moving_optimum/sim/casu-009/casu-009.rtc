@@ -1,0 +1,11 @@
+name: casu-009
+pub_addr: tcp://localhost:5556
+sub_addr: tcp://localhost:5555
+msg_addr: tcp://*:50209
+neighbors:
+  front:
+    address: tcp://localhost:50206
+    name: casu-006
+  left:
+    address: tcp://localhost:50208
+    name: casu-008
