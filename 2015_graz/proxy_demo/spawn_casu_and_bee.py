@@ -2,23 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """
-Simulation environment, with only CASUs.
-We just spawn CASUs first so we can run calibration without bees present.
-
+A simple simulation environment with one Casu and one bee.
 """
 
 from assisipy import sim
-#import argparse
+
+from math import pi
 
 if __name__ == '__main__':
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument('-nc', '--num-casus', type=int, default=1,
-    #        help='number of casus to spawn.')
-    #args = parser.parse_args()
-    # for now, can't do the parsing so quicky since positions need 
-    # calucating -- so just use the deploy env.
 
     simctrl = sim.Control()
-    
-    # Spawn the Casus
+
+    # Spawn the Bee and the Casu
     simctrl.spawn('Casu','casu-001',(0,0,0))
+    simctrl.spawn('Bee','Bee-001',(2,0,pi/2))
+

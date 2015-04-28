@@ -1,0 +1,11 @@
+name: casu-007
+pub_addr: tcp://casu-007:1556
+sub_addr: tcp://casu-007:1555
+msg_addr: tcp://*:10207
+neighbors:
+  front:
+    address: tcp://casu-004:20204
+    name: casu-004
+  right:
+    address: tcp://casu-008:20208
+    name: casu-008

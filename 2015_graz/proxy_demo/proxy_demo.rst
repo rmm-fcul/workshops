@@ -16,7 +16,7 @@ Single circling bee
 - start the simulator: assisi_playground
 - spawn agents: spawn_casu_and_bee.py
 - run the single bee behaviour: bee_circling.py
-- run the CASU: casu_sensing.py
+- run the CASU: casu_sensing.py casu.rtc
  
 
 Single wandering bee
@@ -26,7 +26,7 @@ Single wandering bee
 - spawn casu
 - run CASU (so that the calibration can commence before any bees present)
 - spawn walls and bees: spawn_walls_and_bees.py -n 1
-- run the single bee behaviour: bee_wandering.py 
+- run the single bee behaviour: bees_wander.py -n 1
 
 
 **Extend to >1 bee, single CASU**:
