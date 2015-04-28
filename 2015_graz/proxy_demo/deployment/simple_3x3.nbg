@@ -1,0 +1,28 @@
+digraph simple_3x3 {
+    subgraph "beearena" {
+        "casu-001" -> "casu-002" [ label = "right" ]
+        "casu-001" -> "casu-004" [ label = "back" ]
+        "casu-002" -> "casu-001" [ label = "left" ]
+        "casu-002" -> "casu-003" [ label = "right" ]
+        "casu-002" -> "casu-005" [ label = "back" ]
+        "casu-003" -> "casu-002" [ label = "left" ]
+        "casu-003" -> "casu-006" [ label = "back" ]
+        "casu-004" -> "casu-001" [ label = "front" ]
+        "casu-004" -> "casu-005" [ label = "right" ]
+        "casu-004" -> "casu-007" [ label = "back" ]
+        "casu-005" -> "casu-002" [ label = "front" ]
+        "casu-005" -> "casu-004" [ label = "left" ]
+        "casu-005" -> "casu-006" [ label = "right" ]
+        "casu-005" -> "casu-008" [ label = "back" ]
+        "casu-006" -> "casu-003" [ label = "front" ]
+        "casu-006" -> "casu-005" [ label = "left" ]
+        "casu-006" -> "casu-009" [ label = "back" ]
+        "casu-007" -> "casu-004" [ label = "front" ]
+        "casu-007" -> "casu-008" [ label = "right" ]
+        "casu-008" -> "casu-007" [ label = "left" ]
+        "casu-008" -> "casu-005" [ label = "front" ]
+        "casu-008" -> "casu-009" [ label = "right" ]
+        "casu-009" -> "casu-006" [ label = "front" ]
+        "casu-009" -> "casu-008" [ label = "left" ]
+    }
+}

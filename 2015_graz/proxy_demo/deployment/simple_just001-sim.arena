@@ -1,0 +1,12 @@
+# A simple configuration file describing a 3x3 arena
+
+# The sim prefix defines layers of objects that will be spawned
+# in the simulator when running sim.py on this file
+sim-01 :
+    # Casu names have to start with casu- in order for
+    # automatic spawning to work
+    casu-001 :
+        pose : {x : -5, y : 5, yaw : 0}
+        sub_addr : tcp://localhost:5555
+        pub_addr : tcp://localhost:5556
+        msg_addr : tcp://localhost:50201
