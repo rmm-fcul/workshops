@@ -1,0 +1,7 @@
+digraph simple_just001 {
+    subgraph "sim-01" {
+        "casu-001" -> "casu-001" [ label = "right" ]
+        
+    }
+}
+
