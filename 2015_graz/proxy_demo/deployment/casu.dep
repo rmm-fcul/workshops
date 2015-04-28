@@ -1,0 +1,54 @@
+# Deployment specification file
+# For each casu in the arena, we need to specifiy:
+#     - the hostname of the target machine
+#     - the controller and additional files to deploy
+
+beearena : 
+    casu-001 : 
+        hostname : casu-001
+        user : assisi
+        prefix : deploy 
+        controller: ../casu_sensing.py
+    casu-002 : 
+        hostname : casu-002
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-003 : 
+        hostname : casu-003
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-004 : 
+        hostname : casu-004
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-005 : 
+        hostname : casu-005
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-006 : 
+        hostname : casu-006
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-007 : 
+        hostname : casu-007
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-008 : 
+        hostname : casu-008
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+    casu-009 : 
+        hostname : casu-009
+        user : assisi
+        prefix : deploy
+        controller: ../casu_sensing.py
+
+            
+        
